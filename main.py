@@ -3,61 +3,82 @@ import sys
 from PIL import ImageTk, Image
 
 class Startup:
+    def show_about_window(self, root_window):
+        about_window = tk.Toplevel(root_window)
+        about_window.wm_title("Help")
+        description_label = tk.Label(
+                about_window,
+                text="This is a project for the computer graphics class in TUES.")
+        description_label.pack(padx=30, pady=10)
 
-    def on_button_click(self, root_window):
-      file_win = tk.Toplevel(root_window)
-      button = tk.Button(file_win, text="Do nothing button")
-      button.pack()
+        credit_label = tk.Label(
+                about_window,
+                text="Made by Nikolay Karagyozov, Ivaylo Arnaudov and Toma Marinov.")
+        credit_label.pack(padx=30, pady=10)
+
+    def on_button_click(self):
+        pass
 
     def setup_menubar(self, window):
         menu_bar = tk.Menu(window)
 
         # Define the "File" menu
         file_menu = tk.Menu(menu_bar, tearoff=0)
-        file_menu.add_command(label="New", command=self.on_button_click)
-        file_menu.add_command(label="Open", command=self.on_button_click)
-        file_menu.add_command(label="Save", command=self.on_button_click)
-        file_menu.add_command(label="Save as...", command=self.on_button_click)
-        file_menu.add_command(label="Close", command=self.on_button_click)
+        file_menu.add_command(label="Open",
+                command=lambda: self.on_button_click(window))
+        file_menu.add_command(label="Save",
+                command=lambda: self.on_button_click(window))
+        file_menu.add_command(label="Close",
+                command=lambda: self.on_button_click(window))
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=window.quit)
 
         # Append the file menu to the menu bar
         menu_bar.add_cascade(label="File", menu=file_menu)
 
-        # Define the "Edit" menu
-        edit_menu = tk.Menu(menu_bar, tearoff=0)
-        edit_menu.add_command(label="Undo", command=self.on_button_click)
-        edit_menu.add_separator()
-        edit_menu.add_command(label="Cut", command=self.on_button_click)
-        edit_menu.add_command(label="Copy", command=self.on_button_click)
-        edit_menu.add_command(label="Paste", command=self.on_button_click)
-        edit_menu.add_command(label="Delete", command=self.on_button_click)
-        edit_menu.add_command(label="Select All", command=self.on_button_click)
+        # Define the "Filter" menu
+        filter_menu = tk.Menu(menu_bar, tearoff=0)
+        filter_menu.add_command(label="Negative",
+                command=lambda: self.on_button_click(window))
+        filter_menu.add_command(label="Gaussian blur",
+                command=lambda: self.on_button_click(window))
 
-        # Append the edit menu to the menu bar
-        menu_bar.add_cascade(label="Edit", menu=edit_menu)
+        # Append the filter menu to the menu bar
+        menu_bar.add_cascade(label="Filter", menu=filter_menu)
 
         # Define the "Help" menu
         help_menu = tk.Menu(menu_bar, tearoff=0)
-        help_menu.add_command(label="Help Index", command=self.on_button_click)
-        help_menu.add_command(label="About...", command=self.on_button_click)
+        help_menu.add_command(label="About",
+                command=lambda: self.show_about_window(window))
 
         # Append the help menu to the menu bar
         menu_bar.add_cascade(label="Help", menu=help_menu)
 
         window.config(menu=menu_bar)
 
+    def next_image(self):
+
+    def prev_image(self):
+
     def start(self):
         gallery_window = GalleryWindow()
         gallery_window.window.title("Advanced Photo Viewer")
         gallery_window.window.configure(background='white')
+
+        icon = tk.PhotoImage(file='icon.gif')
+        gallery_window.window.call('wm', 'iconphoto', gallery_window.window._w, icon)
 
         path = 'meme.jpg'
 
         # Creates a Tkinter-compatible photo image, which can be used everywhere
         # Tkinter expects an image object.
         image = ImageTk.PhotoImage(Image.open(path))
+
+        prev_button = tk.Button(gallery_window.window, text="Prev", fg="red",
+                command=self.prev_image)
+
+        next_button = tk.Button(gallery_window.window, text="Next", fg="red",
+                command=self.next_image)
 
         # The Label widget is a standard Tkinter widget used to display a
         # text or image on the screen.
