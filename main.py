@@ -1,7 +1,7 @@
 import Tkinter as tk
-# import tkinter as tk <= for Python 3
 import sys
 from PIL import ImageTk, Image
+from tkMessageBox import *
 
 class Startup:
 
@@ -59,6 +59,7 @@ class Startup:
         gallery_window = GalleryWindow()
         gallery_window.window.title("Advanced Photo Viewer")
         gallery_window.window.configure(background='white')
+	gallery_window.window.protocol("WM_DELETE_WINDOW", lambda: gallery_window.ensure_app_exit())
 
         prev_button = tk.Button(
 		gallery_window.window,
@@ -113,6 +114,10 @@ class GalleryWindow:
         self.state = False
         self.window.attributes("-fullscreen", False)
         return "break"
+
+    def ensure_app_exit(self):
+        if askyesno('Question', 'Are you sure you want to exit the viewer?'):
+	    sys.exit()
 
 if __name__ == '__main__':
     s = Startup()
