@@ -18,3 +18,6 @@ Simple photo viewer
 # Описание
 
 - Потребителски интерфейс: потребителския интерфейс на приложението е имплементиран чрез TkInter, представляващ Python wrapper  върху Tcl/Tk. Чрез него се реализира менюто на приложението, бутоните за следваща и предишна картинка, диалоговите прозорци, бутоните за прилагане на филтри и т.н.
+
+- Ръководител
+![alt tag](https://github.com/newmast/Computer-Graphics-Project/blob/master/ComputerGraphicsProject.png)
